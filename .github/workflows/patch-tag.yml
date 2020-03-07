@@ -10,6 +10,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: benjlevesque/k8s-portal
+          token: ${{ secrets.GH_PAT }}
       - name: Patch
         uses: benjlevesque/patch-tag@master
         with:
