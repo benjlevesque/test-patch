@@ -1,6 +1,8 @@
 name: Patch tags
 
 on: [push]
+env:
+  SHORT_SHA: $(git rev-parse --short=8 ${{ github.sha }})
 
 jobs:
   patch:
@@ -14,14 +16,13 @@ jobs:
       - name: Patch
         uses: benjlevesque/patch-tag@master
         with:
-          tag: $(git rev-parse --short=8 ${{ github.sha }})
+          tag: $SHORT_SHA
           target: portal-api/values.yaml
           path: sync.image
       - name: Commit files
         run: |
-          SHA=$(git rev-parse --short=8 ${{ github.sha }})
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git checkout -b patch/${SHA}
+          git checkout -b patch/${SHORT_SHA}
           git commit -m "Add changes" -a
-           git push --set-upstream origin patch/${SHA}
+           git push --set-upstream origin patch/${SHORT_SHA}
