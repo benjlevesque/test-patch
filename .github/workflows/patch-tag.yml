@@ -1,0 +1,18 @@
+name: Patch tags
+
+on: [push]
+
+jobs:
+  patch:
+    name: patch-image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: benjlevesque/k8s-portal
+      - name: Patch
+        uses: benjlevesque/patch-tag@master
+        with:
+          tag: abcd
+          target: portal-api/values.yaml
+          path: sync.image
