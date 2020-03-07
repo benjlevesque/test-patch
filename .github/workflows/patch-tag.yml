@@ -14,18 +14,18 @@ jobs:
       - name: Patch
         uses: benjlevesque/patch-tag@master
         with:
-          tag: abcd
+          tag: ${GITHUB_SHA::8}
           target: portal-api/values.yaml
           path: sync.image
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git checkout -b patch-tag
+          git checkout -b patch/${GITHUB_SHA::8}
           git commit -m "Add changes" -a
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GH_PAT }}
           repository: benjlevesque/k8s-portal
-          branch: patch-tag
+          branch: patch/${GITHUB_SHA::8}
