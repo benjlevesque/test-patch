@@ -1,2 +1,2 @@
 foo:
-  bar: zzz
+  bar: gcr.io/simon-281618/simon-server:test
